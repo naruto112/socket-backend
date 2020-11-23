@@ -26,6 +26,7 @@ app.use("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+  console.log(`Socket conectado: ${socket.id}`);
   // const { userId } = socket.handshake.query;
   // Chat.find().then((data) => {
   //   socket.emit("previousMessages", data);
@@ -40,9 +41,7 @@ io.on("connection", (socket) => {
 
     // ChatMessage.save().then(() => console.log("Saving"));
     console.log(data);
-    console.log(`Socket conectado: ${socket.id}`);
-
-    socket.broadcast.to(socket.id).emit("received", data);
+    io.to(socket.id).emit("received", data);
   });
 });
 
